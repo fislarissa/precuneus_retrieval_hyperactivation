@@ -1,7 +1,7 @@
 ##########################################################################################################################
 
 #Analysis of PREVENT-AD data - baseline fMRI and follow-up PET with APOE genotype & cognition
-#Larissa Fischer & Eóin N. Molloy - MultiModal Neuroimaging Lab, DZNE Magdeburg
+#Larissa Fischer & Eóin N. Molloy - Multimodal Neuroimaging Lab, DZNE Magdeburg
 
 #########################################################################################################################
 
@@ -198,17 +198,15 @@ anova(PRECvsTAU_f)
 
 
 ### effects of slope of activation over time?
-#first extract slope:
+#model for slope extraction
 PREC <- lmer(PREC_Bilat ~ Time + (1 + Time|Subject), data=prec, REML = F)
 anova(PREC, type = 3)
-# Get the FC slopes
-beta <- coef(PREC) #fixed effects (including mean slope)
+# Get the FC slope differences
+beta <- coef(PREC) #fixed + random effects ( mean slope + individual deviations)
 coef(summary(PREC))[ , "Estimate"]
-slope_values <- ranef(PREC) #random effect: individual slope per subject
+slope_values <- ranef(PREC) #random effect: individual deviation from mean slope per subject
 slope_values <- as.data.frame(slope_values)
 slope_prec <- slope_values$condval
-filtered_base <- base[base$fMRI_Precuneus_Slope > 0.02, ] # subject 079 with steep slope data
-#base$fMRI_Precuneus_Slope[base$Subject == "sub-MTL0079"] <- NA
 
 
 #prec slope on amyloid:
