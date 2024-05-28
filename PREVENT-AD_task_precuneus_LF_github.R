@@ -499,4 +499,77 @@ plot_COG_APOE_PREC_TIME <- ggplot(rbans, aes(x = as.factor(Time), y = delayed_me
   PREC_theme()
 plot_COG_APOE_PREC_TIME
 
+#--------------------------------------------------------------------
+#comparison between slopes
+#--------------------------------------------------------------------
+####RBANS
+#interaction, non-carriers low activation slope different from other 3 group slopes?
+rbans$Time <- as.numeric(rbans$Time)
+corrhr$Time <- as.numeric(corrhr$Time)
+#get slopes (carrier - high act, ...) #this time mean slope + individual difference
+rbans$APOE_ACT_group <- as.factor(rbans$APOE_ACT_group)
+rbans_A_low <- subset(rbans, APOE_ACT_group == "A_low")
+rbans_A_high <- subset(rbans, APOE_ACT_group == "A_high")
+rbans_B_low <- subset(rbans, APOE_ACT_group == "B_low") #B=carrier
+rbans_B_high <-subset(rbans, APOE_ACT_group == "B_high")
+
+groups <- c("A_low", "A_high", "B_low", "B_high")
+slopes_df <- data.frame()
+# Loop through each group
+for (group in groups) {
+  rbans_group <- subset(rbans, APOE_ACT_group == group)
+  COG_APOE_PREC_TIME <- lmer(delayed_memory_index_score ~ Time + (1 + Time | Subject), data = rbans_group, REML = FALSE)
+  # Extract slopes
+  slopes <- coef(COG_APOE_PREC_TIME)$Subject
+  slopes <- data.frame(slopes)
+  slopes$Subject <- rownames(slopes)
+  slopes$Group <- group
+  slopes_df <- rbind(slopes_df, slopes)
+}
+colnames(slopes_df)[which(colnames(slopes_df) == "Time")] <- "Slope"
+rbans <- merge(rbans, slopes_df[, c("Subject", "Slope")], by = "Subject", all.x = TRUE)
+
+rbans_1 <- rbans  %>% filter(Visit_Label_RBANS == "RBANS_BL00")
+describeBy(rbans_1$Slope, rbans_1$APOE_ACT_group)
+anova_results <- aov(Slope ~ APOE_ACT_group + Sex + Education_Baseline_Years + Age_Baseline_Years, data = rbans_1)
+summary(anova_results)
+print(levels(rbans_1$APOE_ACT_group))
+contrast_matrix <- rbind(
+  "A_low vs Others" = c(-1, 3, -1, -1))
+contrast_test <- glht(anova_results, linfct = mcp(APOE_ACT_group = contrast_matrix))
+summary(contrast_test)
+confint(contrast_test)
+anova_results$df.residual
+
+####corrhr 
+#interaction --> 2 slopes different?
+groups <- c("A", "B")
+slopes_df <- data.frame()
+# Loop through each group
+for (group in groups) {
+  corrhr_group <- subset(corrhr, APOE4_Group == group)
+  COG_APOE_TIME <- lmer(HR_corr ~ Time + (1 + Time| Subject), data = corrhr_group, REML = FALSE) #
+  # Extract slopes
+  slopes <- coef(COG_APOE_TIME)$Subject
+  slopes <- data.frame(slopes)
+  slopes$Subject <- rownames(slopes)
+  slopes$Group <- group
+  slopes_df <- rbind(slopes_df, slopes)
+}
+colnames(slopes_df)[which(colnames(slopes_df) == "Time")] <- "Slope"
+corrhr <- merge(corrhr, slopes_df[, c("Subject", "Slope")], by = "Subject", all.x = TRUE)
+
+corrhr_1 <- corrhr  %>% filter(Time == "1")
+describeBy(corrhr_1$Slope, corrhr_1$APOE4_Group)
+anova_results <- aov(Slope ~ APOE4_Group + Sex + Education + Age, data = corrhr_1)
+#table #report
+summary_anova <- summary(anova_results)
+anova_table <- summary_anova[[1]]
+anova_df <- as.data.frame(anova_table)
+anova_df <- anova_df %>% mutate_if(is.numeric, ~ round(., 3))
+print(anova_df)
+posth_hoc_slope_corrhr_to_save <- anova_df %>% regulartable() %>% autofit()
+word_corrhr <- read_docx() %>%
+  body_add_flextable(posth_hoc_slope_corrhr_to_save) %>%
+  print(target = "posth_hoc_slope_corrhr.docx")
 
