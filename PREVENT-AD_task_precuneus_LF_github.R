@@ -96,7 +96,6 @@ shapiro.test(rstandard(baseprec)) #normally distributed
 bptest(baseprec) #homoscedasticity
 vif(baseprec)   #no multicollinearity (a vif score over 5 is a problem)
 tab_model(baseprec, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "baseprec.doc")
-AIC(baseprec)
 describeBy(base$fMRI_Precuneus_Baseline, base$Sex)
 
 #effects of change in precuneus activation over time?
@@ -104,19 +103,16 @@ describeBy(base$fMRI_Precuneus_Baseline, base$Sex)
 PREC <- lmer(PREC_Bilat ~ Time*Sex + Time*APOE4_Group +Age + Education + PREC_GMV + (1 |Subject), data=prec, REML = F)
 summary(PREC)
 confint(PREC)
-AIC(PREC)
 tab_model(PREC, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECwobistdu.doc")
 #males
 PREC_m <- lmer(PREC_Bilat ~ Time +Age + Education + PREC_GMV + (1 |Subject), data=prec_m, REML = F)
 summary(PREC_m)
 confint(PREC_m)
-AIC(PREC_m)
 tab_model(PREC_m, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PREC.doc")
 #females
 PREC_f <- lmer(PREC_Bilat ~ Time +Age + Education + PREC_GMV + (1 |Subject), data=prec_f, REML = F)
 summary(PREC_f)
 confint(PREC_f)
-AIC(PREC_f)
 tab_model(PREC_f, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PREC.doc")
 
 #FIGURE APOE
@@ -172,7 +168,6 @@ shapiro.test(rstandard(PRECvsAMY)) #not normally distributed
 bptest(PRECvsAMY) #homoscedasticity
 vif(PRECvsAMY)   #no multicollinearity
 summary(PRECvsAMY)
-AIC(PRECvsAMY)
 tab_model(PRECvsAMY, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsAMY.doc")
 #FIGURE
 plot_PRECvsAMY <- ggplot(base, aes(fMRI_Precuneus_Baseline, Amyloid_WB_BoxCox)) + 
@@ -189,7 +184,6 @@ shapiro.test(rstandard(PRECvsTAU)) #not normally distributed
 bptest(PRECvsTAU) #homoscedasticity
 vif(PRECvsTAU)   #no multicollinearity
 summary(PRECvsTAU)
-AIC(PRECvsTAU)
 tab_model(PRECvsTAU, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsTAU.doc")
 
 describeBy(base$Entorhinal_Tau_PET_LR_MEAN, base$Sex)
@@ -216,7 +210,6 @@ shapiro.test(rstandard(PRECvsAMY_SLOPE)) #not normally distributed
 bptest(PRECvsAMY_SLOPE) #homoscedasticity
 vif(PRECvsAMY_SLOPE)   #no multicollinearity
 summary(PRECvsAMY_SLOPE)
-AIC(PRECvsAMY_SLOPE)
 tab_model(PRECvsAMY_SLOPE, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsAMY_SLOPE.doc")
 #FIGURE
 plot_PRECvsAMY_SLOPE <- ggplot(base, aes(fMRI_Precuneus_Slope, Amyloid_WB_BoxCox)) + 
@@ -233,7 +226,6 @@ shapiro.test(rstandard(PRECvsTAU_SLOPE)) # almost normally distributed
 bptest(PRECvsTAU_SLOPE) #homoscedasticity
 vif(PRECvsTAU_SLOPE)   #no multicollinearity
 summary(PRECvsTAU_SLOPE)
-AIC(PRECvsTAU_SLOPE)
 tab_model(PRECvsTAU_SLOPE, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsTAU_SLOPE.doc")
 
 
@@ -253,7 +245,6 @@ shapiro.test(rstandard(PRECvsAMY_GEN)) #not normally distributed
 bptest(PRECvsAMY_GEN) #homoscedasticity
 vif(PRECvsAMY_GEN)   #no multicollinearity
 summary(PRECvsAMY_GEN)
-AIC(PRECvsAMY_GEN)
 tab_model(PRECvsAMY_GEN, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsAMY_GEN.doc")
 #FIGURE
 plot_PRECvsAMY_GEN <- ggplot(base, aes(fMRI_Precuneus_Baseline, Amyloid_WB_BoxCox, colour = APOE4_Group)) + 
@@ -269,7 +260,6 @@ PRECvsAMY_GEN_carrier <- lm(Amyloid_WB_BoxCox ~ fMRI_Precuneus_Baseline + Age_Ba
 anova(PRECvsAMY_GEN_carrier) 
 coefficients_summary2 <- summary(PRECvsAMY_GEN_carrier)$coefficients
 coefficients_summary2
-AIC(PRECvsAMY_GEN_carrier)
 tab_model(PRECvsAMY_GEN_carrier, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsAMY_GEN_carrier.doc")
 
 
@@ -287,7 +277,6 @@ shapiro.test(rstandard(PRECvsAMY_SLOPE_GEN)) #not normally distributed
 bptest(PRECvsAMY_SLOPE_GEN) #homoscedasticity
 vif(PRECvsAMY_SLOPE_GEN)   #no multicollinearity
 summary(PRECvsAMY_SLOPE_GEN)
-AIC(PRECvsAMY_SLOPE_GEN)
 tab_model(PRECvsAMY_SLOPE_GEN, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsAMY_SLOPE_GEN.doc")
 #FIGURE
 plot_PRECvsAMY_SLOPE_GEN <- ggplot(base, aes(fMRI_Precuneus_Slope, Amyloid_WB_BoxCox, colour = APOE4_Group)) + 
@@ -302,7 +291,6 @@ plot_PRECvsAMY_SLOPE_GEN
 PRECvsAMY_SLOPE_GEN_carrier <- lm(Amyloid_WB_BoxCox ~ fMRI_Precuneus_Slope + Age_Baseline_Months + Education_Baseline_Years + Sex + BaseMRI_to_Amy_PET_Months + Prec_GM_Volume, data=base_carrier)
 anova(PRECvsAMY_SLOPE_GEN_carrier) 
 summary(PRECvsAMY_SLOPE_GEN_carrier)
-AIC(PRECvsAMY_SLOPE_GEN_carrier)
 tab_model(PRECvsAMY_SLOPE_GEN_carrier, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PRECvsAMY_SLOPE_GEN_carrier.doc")
           
 #prec slope on tau:
@@ -315,7 +303,6 @@ anova(PRECvsTAU_SLOPE_GEN)
 #Group differences in PET Amyloid?
 amy_GEN <- lm(Amyloid_WB_BoxCox ~ APOE4_Group + Age_Baseline_Months + Education_Baseline_Years + Sex, data=base)
 summary(amy_GEN)
-AIC(amy_GEN)
 tab_model(amy_GEN, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "amy_GEN.doc")
 #FIGURE
 amy_GEN_boxplot <- ggplot(base, aes(x = APOE4_Group, y = Amyloid_WB_BoxCox, fill = APOE4_Group)) + 
@@ -334,7 +321,6 @@ amy_GEN_boxplot
 #Group differences in PET Entorhinal Tau?
 tau_GEN <- lm(Entorhinal_Tau_PET_LR_MEAN_BoxCox ~ APOE4_Group + Age_Baseline_Months + Education_Baseline_Years + Sex, data=base)
 summary(tau_GEN)
-AIC(tau_GEN)
 tab_model(tau_GEN, df.method = "satterthwaite",show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "tau_GEN.doc")
 #FIGURE
 tau_GEN_boxplot <- ggplot(base, aes(x = APOE4_Group, y = Entorhinal_Tau_PET_LR_MEAN_BoxCox, fill = APOE4_Group)) + 
@@ -369,13 +355,6 @@ nonan$Sex <- as.numeric(nonan$Sex)
 prec_v_RBANS <- nonan[,c("RBANS_delayed_memory_index_score_Baseline", "fMRI_Precuneus_Baseline", "Age_Baseline_Months", "Sex", "Education_Baseline_Years")]
 pcor(prec_v_RBANS, method = "spearman") 
 
-#BL prec activation - BL Moca
-nonan <- subset(base, Subject != "sub-MTL0550")
-nonan$Sex <- as.numeric(nonan$Sex)
-prec_v_moca <- nonan[,c("MOCA_Total_Score", "fMRI_Precuneus_Baseline", "Age_Baseline_Months", "Sex", "Education_Baseline_Years")]
-pcor(prec_v_moca, method = "spearman") 
-
-
 
 ### longitudinal memory performance
 #corrected hit rate over time
@@ -384,7 +363,6 @@ CorrHR <- lmer(HR_corr ~ Time + Age + Sex + Education + (1 |Subject), data=corrh
 anova(CorrHR, type = 3)
 summary(CorrHR)
 confint(CorrHR)
-AIC(CorrHR)
 tab_model(CorrHR, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "CorrHR.doc")
 describeBy(corrhr_f$HR_corr, corrhr_f$Time)
 
@@ -394,7 +372,6 @@ anova(RBANS, type = 3)
 Anova(RBANS)
 summary(RBANS)
 confint(RBANS)
-AIC(RBANS)
 tab_model(RBANS, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "RBANS.doc")
 
 
@@ -410,14 +387,12 @@ PREC_GEN_TIME_CorrHR <- lmer(HR_corr ~ Time*APOE4_Group + Time*PREC_Bilat_Baseli
 anova(PREC_GEN_TIME_CorrHR) 
 summary(PREC_GEN_TIME_CorrHR)
 confint(PREC_GEN_TIME_CorrHR)
-AIC(PREC_GEN_TIME_CorrHR)
 tab_model(PREC_GEN_TIME_CorrHR, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PREC_GEN_TIME_CorrHR.doc")
 
 PREC_GEN_TIME_CorrHR2 <- lmer(HR_corr ~ Time*APOE4_Group*PREC_Bilat_Baseline + Age + Sex + Education + (1 |Subject), data=corrhr, REML = F)
 anova(PREC_GEN_TIME_CorrHR2) 
 summary(PREC_GEN_TIME_CorrHR2)
 confint(PREC_GEN_TIME_CorrHR2)
-AIC(PREC_GEN_TIME_CorrHR2)
 tab_model(PREC_GEN_TIME_CorrHR2, df.method = "satterthwaite", show.stat = TRUE, show.se = TRUE, show.std = TRUE, file = "PREC_GEN_TIME_CorrHR.doc")
 
 #post hoc corrHR
