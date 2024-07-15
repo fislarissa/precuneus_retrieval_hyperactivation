@@ -173,7 +173,7 @@ tab_model(PRECvsAMY, df.method = "satterthwaite",show.stat = TRUE, show.se = TRU
 plot_PRECvsAMY <- ggplot(base, aes(fMRI_Precuneus_Baseline, Amyloid_WB_BoxCox)) + 
   geom_point() +
   geom_smooth(aes(fMRI_Precuneus_Baseline, Amyloid_WB_BoxCox), method = lm) +
-  xlab ("Precuneus BOLD-Signal at baseline") + ylab ("Whole Brain Amyloid SURV") +
+  xlab ("Precuneus BOLD-Signal at baseline") + ylab ("Whole Brain Amyloid SUVR") +
   PREC_theme()
 plot_PRECvsAMY
 
@@ -215,7 +215,7 @@ tab_model(PRECvsAMY_SLOPE, df.method = "satterthwaite",show.stat = TRUE, show.se
 plot_PRECvsAMY_SLOPE <- ggplot(base, aes(fMRI_Precuneus_Slope, Amyloid_WB_BoxCox)) + 
   geom_point() +
   geom_smooth(aes(fMRI_Precuneus_Slope, Amyloid_WB_BoxCox), method = lm) +
-  xlab ("Precuneus BOLD-Signal over time (slope)") + ylab ("Whole Brain Amyloid SURV") +
+  xlab ("Precuneus BOLD-Signal over time (slope)") + ylab ("Whole Brain Amyloid SUVR") +
   PREC_theme()
 plot_PRECvsAMY_SLOPE
 
@@ -251,7 +251,7 @@ plot_PRECvsAMY_GEN <- ggplot(base, aes(fMRI_Precuneus_Baseline, Amyloid_WB_BoxCo
   geom_point() +
   geom_smooth(aes(fMRI_Precuneus_Baseline, Amyloid_WB_BoxCox), method = lm) +
   scale_color_manual(labels = c("Non-carrier", "Carrier"), values = c("#1A85FF", "#D41159")) + labs(color = expression(italic("APOE4") * " group")) +
-  xlab ("Precuneus BOLD-Signal at baseline") + ylab ("Whole Brain Amyloid SURV") +
+  xlab ("Precuneus BOLD-Signal at baseline") + ylab ("Whole Brain Amyloid SUVR") +
   PREC_theme()
 plot_PRECvsAMY_GEN
 
@@ -283,7 +283,7 @@ plot_PRECvsAMY_SLOPE_GEN <- ggplot(base, aes(fMRI_Precuneus_Slope, Amyloid_WB_Bo
   geom_point() +
   geom_smooth(aes(fMRI_Precuneus_Slope, Amyloid_WB_BoxCox), method = lm) +
   scale_color_manual(labels = c("Non-carrier", "Carrier"), values = c("#1A85FF", "#D41159")) + labs(color = expression(italic("APOE4") * " group")) +
-  xlab ("Precuneus BOLD-Signal over time (slope)") + ylab ("Whole Brain Amyloid SURV") +
+  xlab ("Precuneus BOLD-Signal over time (slope)") + ylab ("Whole Brain Amyloid SUVR") +
   PREC_theme()
 plot_PRECvsAMY_SLOPE_GEN
 
